@@ -36,7 +36,7 @@ module.exports = function (module) {
 		if (!field) {
 			return;
 		}
-		var data = {};
+		const data = {};
 		data[field] = value;
 		await module.setObject(key, data);
 	};
@@ -157,7 +157,7 @@ module.exports = function (module) {
 			return;
 		}
 
-		var data = {};
+		const data = {};
 		fields.forEach((field) => {
 			field = helpers.fieldToString(field);
 			data[field] = '';
@@ -185,12 +185,12 @@ module.exports = function (module) {
 			return null;
 		}
 
-		var increment = {};
+		const increment = {};
 		field = helpers.fieldToString(field);
 		increment[field] = value;
 
 		if (Array.isArray(key)) {
-			var bulk = module.client.collection('objects').initializeUnorderedBulkOp();
+			const bulk = module.client.collection('objects').initializeUnorderedBulkOp();
 			key.forEach((key) => {
 				bulk.find({ _key: key }).upsert().update({ $inc: increment });
 			});

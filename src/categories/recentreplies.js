@@ -97,12 +97,12 @@ module.exports = function (Categories) {
 				topic.teaserPid = topic.teaserPid || topic.mainPid;
 			}
 		});
-		var cids = _.uniq(topicData.map(topic => topic && topic.cid).filter(cid => parseInt(cid, 10)));
+		const cids = _.uniq(topicData.map(topic => topic && topic.cid).filter(cid => parseInt(cid, 10)));
 		const [categoryData, teasers] = await Promise.all([
 			Categories.getCategoriesFields(cids, ['cid', 'parentCid']),
 			topics.getTeasers(topicData, uid),
 		]);
-		var parentCids = {};
+		const parentCids = {};
 		categoryData.forEach((category) => {
 			parentCids[category.cid] = category.parentCid;
 		});
@@ -137,7 +137,7 @@ module.exports = function (Categories) {
 				if (category.posts.length) {
 					return;
 				}
-				var posts = [];
+				const posts = [];
 				getPostsRecursive(category, posts);
 
 				posts.sort((a, b) => b.pid - a.pid);
