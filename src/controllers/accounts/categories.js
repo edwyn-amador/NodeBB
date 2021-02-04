@@ -17,7 +17,7 @@ categoriesController.get = async function (req, res, next) {
 		categories.buildForSelect(userData.uid, 'find', ['descriptionParsed', 'depth', 'slug']),
 	]);
 
-	categoriesData.forEach(function (category) {
+	categoriesData.forEach((category) => {
 		if (category) {
 			category.isIgnored = states[category.cid] === categories.watchStates.ignoring;
 			category.isWatched = states[category.cid] === categories.watchStates.watching;

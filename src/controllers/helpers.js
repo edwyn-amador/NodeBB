@@ -58,7 +58,7 @@ helpers.addLinkTags = function (params) {
 		href: `${url}/${params.url}`,
 	});
 
-	params.tags.forEach(function (rel) {
+	params.tags.forEach((rel) => {
 		rel.href = `${url}/${params.url}${rel.href}`;
 		params.res.locals.linkTags.push(rel);
 	});
@@ -208,7 +208,7 @@ helpers.buildBreadcrumbs = function (crumbs) {
 		},
 	];
 
-	crumbs.forEach(function (crumb) {
+	crumbs.forEach((crumb) => {
 		if (crumb) {
 			if (crumb.url) {
 				crumb.url = relative_path + crumb.url;
@@ -259,7 +259,7 @@ async function getCategoryData(cids, uid, selectedCid, states, privilege) {
 	const cidToCategory = _.zipObject(cids, categoryData);
 	const cidToWatchState = _.zipObject(cids, watchState);
 
-	const visibleCategories = categoryData.filter(function (c) {
+	const visibleCategories = categoryData.filter((c) => {
 		const hasVisibleChildren = checkVisibleChildren(c, cidToAllowed, cidToWatchState, states);
 		const isCategoryVisible = c && cidToAllowed[c.cid] && !c.link && !c.disabled && states.includes(cidToWatchState[c.cid]);
 		const shouldBeRemoved = !hasVisibleChildren && !isCategoryVisible;
@@ -280,7 +280,7 @@ async function getCategoryData(cids, uid, selectedCid, states, privilege) {
 
 	let selectedCategory = [];
 	const selectedCids = [];
-	categoriesData.forEach(function (category) {
+	categoriesData.forEach((category) => {
 		category.selected = selectedCid ? selectedCid.includes(String(category.cid)) : false;
 		if (category.selected) {
 			selectedCategory.push(category);
@@ -322,12 +322,10 @@ helpers.getHomePageRoutes = async function (uid) {
 	cids = await privileges.categories.filterCids('find', cids, uid);
 	const categoryData = await categories.getCategoriesFields(cids, ['name', 'slug']);
 
-	const categoryRoutes = categoryData.map(function (category) {
-		return {
-			route: `category/${category.slug}`,
-			name: `Category: ${category.name}`,
-		};
-	});
+	const categoryRoutes = categoryData.map(category => ({
+		route: `category/${category.slug}`,
+		name: `Category: ${category.name}`,
+	}));
 	const routes = [
 		{
 			route: 'categories',

@@ -21,7 +21,7 @@ categoriesController.get = async function (req, res, next) {
 	}
 
 	category.parent = parent[0];
-	allCategories.forEach(function (category) {
+	allCategories.forEach((category) => {
 		if (category) {
 			category.selected = parseInt(category.cid, 10) === parseInt(req.params.category_id, 10);
 		}

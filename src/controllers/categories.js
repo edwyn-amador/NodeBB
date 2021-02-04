@@ -40,11 +40,11 @@ categoriesController.list = async function (req, res) {
 		pagination: pagination.create(page, pageCount, req.query),
 	};
 
-	data.categories.forEach(function (category) {
+	data.categories.forEach((category) => {
 		if (category) {
 			if (Array.isArray(category.children)) {
 				category.children = category.children.slice(0, category.subCategoriesPerPage);
-				category.children.forEach(function (child) {
+				category.children.forEach((child) => {
 					child.children = undefined;
 				});
 			}

@@ -41,7 +41,7 @@ module.exports = function (Categories) {
 
 		Categories.getTree(categoryData, 0);
 		await Categories.getRecentTopicReplies(categoryData, uid, data.qs);
-		categoryData.sort(function (c1, c2) {
+		categoryData.sort((c1, c2) => {
 			if (c1.parentCid !== c2.parentCid) {
 				return c1.parentCid - c2.parentCid;
 			}

@@ -92,7 +92,7 @@ module.exports = function (Categories) {
 
 	async function getTopics(tids, uid) {
 		const topicData = await topics.getTopicsFields(tids, ['tid', 'mainPid', 'slug', 'title', 'teaserPid', 'cid', 'postcount']);
-		topicData.forEach(function (topic) {
+		topicData.forEach((topic) => {
 			if (topic) {
 				topic.teaserPid = topic.teaserPid || topic.mainPid;
 			}
@@ -103,10 +103,10 @@ module.exports = function (Categories) {
 			topics.getTeasers(topicData, uid),
 		]);
 		var parentCids = {};
-		categoryData.forEach(function (category) {
+		categoryData.forEach((category) => {
 			parentCids[category.cid] = category.parentCid;
 		});
-		teasers.forEach(function (teaser, index) {
+		teasers.forEach((teaser, index) => {
 			if (teaser) {
 				teaser.cid = topicData[index].cid;
 				teaser.parentCid = parseInt(parentCids[teaser.cid], 10) || 0;
@@ -122,7 +122,7 @@ module.exports = function (Categories) {
 	}
 
 	function assignTopicsToCategories(categories, topics) {
-		categories.forEach(function (category) {
+		categories.forEach((category) => {
 			if (category) {
 				category.posts = topics.filter(topic => topic.cid && (topic.cid === category.cid || topic.parentCid === category.cid))
 					.sort((a, b) => b.pid - a.pid)
@@ -132,7 +132,7 @@ module.exports = function (Categories) {
 	}
 
 	function bubbleUpChildrenPosts(categoryData) {
-		categoryData.forEach(function (category) {
+		categoryData.forEach((category) => {
 			if (category) {
 				if (category.posts.length) {
 					return;
@@ -150,12 +150,12 @@ module.exports = function (Categories) {
 
 	function getPostsRecursive(category, posts) {
 		if (Array.isArray(category.posts)) {
-			category.posts.forEach(function (p) {
+			category.posts.forEach((p) => {
 				posts.push(p);
 			});
 		}
 
-		category.children.forEach(function (child) {
+		category.children.forEach((child) => {
 			getPostsRecursive(child, posts);
 		});
 	}
@@ -167,7 +167,7 @@ module.exports = function (Categories) {
 			topics.getTopicField(tid, 'deleted'),
 		]);
 
-		await batch.processArray(pids, async function (pids) {
+		await batch.processArray(pids, async (pids) => {
 			const postData = await posts.getPostsFields(pids, ['pid', 'deleted', 'uid', 'timestamp', 'upvotes', 'downvotes']);
 
 			const bulkRemove = [];
