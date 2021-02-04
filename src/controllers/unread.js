@@ -43,15 +43,15 @@ unreadController.get = async function (req, res) {
 
 	if (userSettings.usePagination && (page < 1 || page > data.pageCount)) {
 		req.query.page = Math.max(1, Math.min(data.pageCount, page));
-		return helpers.redirect(res, '/unread?' + querystring.stringify(req.query));
+		return helpers.redirect(res, `/unread?${querystring.stringify(req.query)}`);
 	}
 	data.showSelect = true;
 	data.showTopicTools = isPrivileged;
 	data.categories = watchedCategories.categories;
-	data.allCategoriesUrl = 'unread' + helpers.buildQueryString(req.query, 'cid', '');
+	data.allCategoriesUrl = `unread${helpers.buildQueryString(req.query, 'cid', '')}`;
 	data.selectedCategory = watchedCategories.selectedCategory;
 	data.selectedCids = watchedCategories.selectedCids;
-	if (req.originalUrl.startsWith(nconf.get('relative_path') + '/api/unread') || req.originalUrl.startsWith(nconf.get('relative_path') + '/unread')) {
+	if (req.originalUrl.startsWith(`${nconf.get('relative_path')}/api/unread`) || req.originalUrl.startsWith(`${nconf.get('relative_path')}/unread`)) {
 		data.title = '[[pages:unread]]';
 		data.breadcrumbs = helpers.buildBreadcrumbs([{ text: '[[unread:title]]' }]);
 	}

@@ -30,7 +30,7 @@ helpers.noScriptErrors = async function (req, res, error, httpStatus) {
 		loggedIn: req.loggedIn,
 		error: error,
 		returnLink: true,
-		title: '[[global:' + httpStatusString + '.title]]',
+		title: `[[global:${httpStatusString}.title]]`,
 	});
 };
 
@@ -48,18 +48,18 @@ helpers.buildQueryString = function (query, key, value) {
 		delete queryObj[key];
 	}
 	delete queryObj._;
-	return Object.keys(queryObj).length ? '?' + querystring.stringify(queryObj) : '';
+	return Object.keys(queryObj).length ? `?${querystring.stringify(queryObj)}` : '';
 };
 
 helpers.addLinkTags = function (params) {
 	params.res.locals.linkTags = params.res.locals.linkTags || [];
 	params.res.locals.linkTags.push({
 		rel: 'canonical',
-		href: url + '/' + params.url,
+		href: `${url}/${params.url}`,
 	});
 
 	params.tags.forEach(function (rel) {
-		rel.href = url + '/' + params.url + rel.href;
+		rel.href = `${url}/${params.url}${rel.href}`;
 		params.res.locals.linkTags.push(rel);
 	});
 };
@@ -140,7 +140,7 @@ helpers.notAllowed = async function (req, res, error) {
 		helpers.formatApiResponse(401, res, error);
 	} else {
 		req.session.returnTo = req.url;
-		res.redirect(relative_path + '/login');
+		res.redirect(`${relative_path}/login`);
 	}
 };
 
@@ -179,7 +179,7 @@ helpers.buildCategoryBreadcrumbs = async function (cid) {
 		if (!data.disabled && !data.isSection) {
 			breadcrumbs.unshift({
 				text: String(data.name),
-				url: relative_path + '/category/' + data.slug,
+				url: `${relative_path}/category/${data.slug}`,
 				cid: cid,
 			});
 		}
@@ -188,13 +188,13 @@ helpers.buildCategoryBreadcrumbs = async function (cid) {
 	if (meta.config.homePageRoute && meta.config.homePageRoute !== 'categories') {
 		breadcrumbs.unshift({
 			text: '[[global:header.categories]]',
-			url: relative_path + '/categories',
+			url: `${relative_path}/categories`,
 		});
 	}
 
 	breadcrumbs.unshift({
 		text: '[[global:home]]',
-		url: relative_path + '/',
+		url: `${relative_path}/`,
 	});
 
 	return breadcrumbs;
@@ -204,7 +204,7 @@ helpers.buildBreadcrumbs = function (crumbs) {
 	const breadcrumbs = [
 		{
 			text: '[[global:home]]',
-			url: relative_path + '/',
+			url: `${relative_path}/`,
 		},
 	];
 
@@ -324,8 +324,8 @@ helpers.getHomePageRoutes = async function (uid) {
 
 	const categoryRoutes = categoryData.map(function (category) {
 		return {
-			route: 'category/' + category.slug,
-			name: 'Category: ' + category.name,
+			route: `category/${category.slug}`,
+			name: `Category: ${category.name}`,
 		};
 	});
 	const routes = [

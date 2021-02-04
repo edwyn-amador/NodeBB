@@ -125,8 +125,8 @@ Groups.get = async function (groupName, options) {
 		Groups.getGroupData(groupName),
 		Groups.getOwnersAndMembers(groupName, options.uid, 0, stop),
 		categories.buildForSelect(groupName, 'topics:read', []),
-		Groups.getUsersFromSet('group:' + groupName + ':pending', ['username', 'userslug', 'picture']),
-		Groups.getUsersFromSet('group:' + groupName + ':invited', ['username', 'userslug', 'picture']),
+		Groups.getUsersFromSet(`group:${groupName}:pending`, ['username', 'userslug', 'picture']),
+		Groups.getUsersFromSet(`group:${groupName}:invited`, ['username', 'userslug', 'picture']),
 		Groups.isMember(options.uid, groupName),
 		Groups.isPending(options.uid, groupName),
 		Groups.isInvited(options.uid, groupName),
@@ -155,11 +155,11 @@ Groups.get = async function (groupName, options) {
 };
 
 Groups.getOwners = async function (groupName) {
-	return await db.getSetMembers('group:' + groupName + ':owners');
+	return await db.getSetMembers(`group:${groupName}:owners`);
 };
 
 Groups.getOwnersAndMembers = async function (groupName, uid, start, stop) {
-	const ownerUids = await db.getSetMembers('group:' + groupName + ':owners');
+	const ownerUids = await db.getSetMembers(`group:${groupName}:owners`);
 	const countToReturn = stop - start + 1;
 	const ownerUidsOnPage = ownerUids.slice(start, stop !== -1 ? stop + 1 : undefined);
 	const owners = await user.getUsers(ownerUidsOnPage, uid);
@@ -176,7 +176,7 @@ Groups.getOwnersAndMembers = async function (groupName, uid, start, stop) {
 	memberStart = Math.max(0, memberStart);
 	memberStop = Math.max(0, memberStop);
 	async function addMembers(start, stop) {
-		let batch = await user.getUsersFromSet('group:' + groupName + ':members', uid, start, stop);
+		let batch = await user.getUsersFromSet(`group:${groupName}:members`, uid, start, stop);
 		if (!batch.length) {
 			done = true;
 		}
@@ -226,7 +226,7 @@ Groups.isHidden = async function (groupName) {
 };
 
 async function isFieldOn(groupName, field) {
-	const value = await db.getObjectField('group:' + groupName, field);
+	const value = await db.getObjectField(`group:${groupName}`, field);
 	return parseInt(value, 10) === 1;
 }
 

@@ -18,23 +18,23 @@ module.exports = function (Groups) {
 		const groupsCids = await groups.getGroupsFields(groupNames, ['memberPostCids']);
 		groupNames = groupNames.filter((groupName, idx) => !groupsCids[idx].memberPostCids.length || groupsCids[idx].memberPostCids.includes(postData.cid));
 
-		const keys = groupNames.map(groupName => 'group:' + groupName + ':member:pids');
+		const keys = groupNames.map(groupName => `group:${groupName}:member:pids`);
 		await db.sortedSetsAdd(keys, postData.timestamp, postData.pid);
 		await Promise.all(groupNames.map(name => truncateMemberPosts(name)));
 	};
 
 	async function truncateMemberPosts(groupName) {
-		let lastPid = await db.getSortedSetRevRange('group:' + groupName + ':member:pids', 10, 10);
+		let lastPid = await db.getSortedSetRevRange(`group:${groupName}:member:pids`, 10, 10);
 		lastPid = lastPid[0];
 		if (!parseInt(lastPid, 10)) {
 			return;
 		}
-		const score = await db.sortedSetScore('group:' + groupName + ':member:pids', lastPid);
-		await db.sortedSetsRemoveRangeByScore(['group:' + groupName + ':member:pids'], '-inf', score);
+		const score = await db.sortedSetScore(`group:${groupName}:member:pids`, lastPid);
+		await db.sortedSetsRemoveRangeByScore([`group:${groupName}:member:pids`], '-inf', score);
 	}
 
 	Groups.getLatestMemberPosts = async function (groupName, max, uid) {
-		let pids = await db.getSortedSetRevRange('group:' + groupName + ':member:pids', 0, max - 1);
+		let pids = await db.getSortedSetRevRange(`group:${groupName}:member:pids`, 0, max - 1);
 		pids = await privileges.posts.filter('topics:read', pids, uid);
 		return await posts.getPostSummaryByPids(pids, uid, { stripTags: false });
 	};
