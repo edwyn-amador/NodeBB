@@ -93,7 +93,7 @@ Categories.getPrivilegeSettings = async function (socket, cid) {
 
 Categories.copyPrivilegesToChildren = async function (socket, data) {
 	const result = await categories.getChildren([data.cid], socket.uid);
-	const children = result[0];
+	const [children] = result;
 	for (const child of children) {
 		// eslint-disable-next-line no-await-in-loop
 		await copyPrivilegesToChildrenRecursive(data.cid, child, data.group);

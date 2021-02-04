@@ -74,7 +74,7 @@ async function getGroupNames() {
 }
 
 groupsController.getCSV = async function (req, res) {
-	const referer = req.headers.referer;
+	const { referer } = req.headers;
 
 	if (!referer || !referer.replace(nconf.get('url'), '').startsWith('/admin/manage/groups')) {
 		return res.status(403).send('[[error:invalid-origin]]');
@@ -86,7 +86,7 @@ groupsController.getCSV = async function (req, res) {
 		group: req.params.groupname,
 	});
 	const groupName = req.params.groupname;
-	const members = (await groups.getMembersOfGroups([groupName]))[0];
+	const [members] = await groups.getMembersOfGroups([groupName]);
 	const fields = ['email', 'username', 'uid'];
 	const userData = await user.getUsersFields(members, fields);
 	let csvContent = `${fields.join(',')}\n`;

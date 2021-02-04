@@ -196,7 +196,7 @@ module.exports = function (Topics) {
 			throw new Error('[[error:invalid-data]]');
 		}
 
-		const cid = uniqueCids[0];
+		const [cid] = uniqueCids;
 
 		const isAdminOrMod = await privileges.categories.isAdminOrMod(cid, uid);
 		if (!isAdminOrMod) {

@@ -107,7 +107,7 @@ async function getFileData(currentDir, file) {
 }
 
 uploadsController.uploadCategoryPicture = async function (req, res, next) {
-	const uploadedFile = req.files.files[0];
+	const [uploadedFile] = req.files.files;
 	let params = null;
 
 	try {
@@ -124,7 +124,7 @@ uploadsController.uploadCategoryPicture = async function (req, res, next) {
 };
 
 uploadsController.uploadFavicon = async function (req, res, next) {
-	const uploadedFile = req.files.files[0];
+	const [uploadedFile] = req.files.files;
 	const allowedTypes = ['image/x-icon', 'image/vnd.microsoft.icon'];
 
 	if (validateUpload(res, uploadedFile, allowedTypes)) {
@@ -140,7 +140,7 @@ uploadsController.uploadFavicon = async function (req, res, next) {
 };
 
 uploadsController.uploadTouchIcon = async function (req, res, next) {
-	const uploadedFile = req.files.files[0];
+	const [uploadedFile] = req.files.files;
 	const allowedTypes = ['image/png'];
 	const sizes = [36, 48, 72, 96, 144, 192, 512];
 
@@ -168,7 +168,7 @@ uploadsController.uploadTouchIcon = async function (req, res, next) {
 
 
 uploadsController.uploadMaskableIcon = async function (req, res, next) {
-	const uploadedFile = req.files.files[0];
+	const [uploadedFile] = req.files.files;
 	const allowedTypes = ['image/png'];
 
 	if (validateUpload(res, uploadedFile, allowedTypes)) {
@@ -188,7 +188,7 @@ uploadsController.uploadLogo = async function (req, res, next) {
 };
 
 uploadsController.uploadFile = async function (req, res, next) {
-	const uploadedFile = req.files.files[0];
+	const [uploadedFile] = req.files.files;
 	let params;
 	try {
 		params = JSON.parse(req.body.params);
@@ -216,7 +216,7 @@ uploadsController.uploadOgImage = async function (req, res, next) {
 };
 
 async function upload(name, req, res, next) {
-	const uploadedFile = req.files.files[0];
+	const [uploadedFile] = req.files.files;
 
 	if (validateUpload(res, uploadedFile, allowedImageTypes)) {
 		const filename = name + path.extname(uploadedFile.name);

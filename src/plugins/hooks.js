@@ -86,7 +86,7 @@ Hooks.unregister = function (id, hook, method) {
 
 Hooks.fire = async function (hook, params) {
 	const hookList = plugins.loadedHooks[hook];
-	const hookType = hook.split(':')[0];
+	const [hookType] = hook.split(':');
 	if (global.env === 'development' && hook !== 'action:plugins.firehook') {
 		winston.verbose(`[plugins/fireHook] ${hook}`);
 	}

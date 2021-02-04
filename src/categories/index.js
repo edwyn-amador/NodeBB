@@ -35,7 +35,7 @@ Categories.getCategoryById = async function (data) {
 	if (!categories[0]) {
 		return null;
 	}
-	const category = categories[0];
+	const [category] = categories;
 	data.category = category;
 
 	const promises = [

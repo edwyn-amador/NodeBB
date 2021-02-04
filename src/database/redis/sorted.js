@@ -291,7 +291,7 @@ module.exports = function (module) {
 			const res = await module.client.async.zscan(params.key, cursor, 'MATCH', params.match, 'COUNT', 5000);
 			cursor = res[0];
 			done = cursor === '0';
-			const data = res[1];
+			const [, data] = res;
 
 			for (let i = 0; i < data.length; i += 2) {
 				const value = data[i];

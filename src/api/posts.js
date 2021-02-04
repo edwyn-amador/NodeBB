@@ -28,7 +28,7 @@ postsAPI.get = async function (caller, data) {
 	}
 	Object.assign(post, voted);
 
-	const userPrivilege = userPrivileges[0];
+	const [userPrivilege] = userPrivileges;
 	if (!userPrivilege.read || !userPrivilege['topics:read']) {
 		return null;
 	}

@@ -19,7 +19,7 @@ topController.get = async function (req, res, next) {
 		data.title = `[[pages:top-${term}]]`;
 	}
 
-	const feedQs = data.rssFeedUrl.split('?')[1];
+	const [feedQs] = data.rssFeedUrl.split('?');
 	data.rssFeedUrl = `${nconf.get('relative_path')}/top/${validator.escape(String(req.query.term || 'alltime'))}.rss`;
 	if (req.loggedIn) {
 		data.rssFeedUrl += `?${feedQs}`;

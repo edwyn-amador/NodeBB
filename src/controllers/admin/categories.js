@@ -15,7 +15,7 @@ categoriesController.get = async function (req, res, next) {
 		categories.buildForSelectAll(),
 	]);
 
-	const category = categoryData[0];
+	const [category] = categoryData;
 	if (!category) {
 		return next();
 	}

@@ -28,7 +28,7 @@ module.exports = function (Topics) {
 
 		pids.sort((a, b) => a - b);
 
-		const mainPid = pids[0];
+		const [mainPid] = pids;
 		const cid = await posts.getCidByPid(mainPid);
 
 		const [postData, isAdminOrMod] = await Promise.all([

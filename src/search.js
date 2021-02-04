@@ -243,7 +243,7 @@ function sortPosts(posts, data) {
 		return posts.sort((p1, p2) => direction * (p2[fields[0]] - p1[fields[0]]));
 	}
 
-	const firstPost = posts[0];
+	const [firstPost] = posts;
 	if (!fields || fields.length !== 2 || !firstPost[fields[0]] || !firstPost[fields[0]][fields[1]]) {
 		return;
 	}

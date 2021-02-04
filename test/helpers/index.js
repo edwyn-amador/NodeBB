@@ -69,7 +69,7 @@ helpers.connectSocketIO = function (res, callback) {
 	const io = require('socket.io-client');
 	let cookies = res.headers['set-cookie'];
 	cookies = cookies.filter(c => /express.sid=[^;]+;/.test(c));
-	const cookie = cookies[0];
+	const [cookie] = cookies;
 	const socket = io(nconf.get('base_url'), {
 		path: `${nconf.get('relative_path')}/socket.io`,
 		extraHeaders: {

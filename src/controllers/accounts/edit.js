@@ -124,7 +124,7 @@ async function getUserData(req) {
 }
 
 editController.uploadPicture = async function (req, res, next) {
-	const userPhoto = req.files.files[0];
+	const [userPhoto] = req.files.files;
 	try {
 		const updateUid = await user.getUidByUserslug(req.params.userslug);
 		const isAllowed = await privileges.users.canEdit(req.uid, updateUid);

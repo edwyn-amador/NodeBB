@@ -8,7 +8,7 @@ module.exports = function (theModule, ignoreKeys) {
 		if (typeof func !== 'function') {
 			return false;
 		}
-		const str = func.toString().split('\n')[0];
+		const [str] = func.toString().split('\n');
 		return str.includes('callback)');
 	}
 

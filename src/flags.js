@@ -658,7 +658,7 @@ Flags.getHistory = async function (flagId) {
 		uids.push(entry.value[0]);
 
 		// Deserialise changeset
-		const changeset = entry.value[1];
+		const [, changeset] = entry.value;
 		if (changeset.hasOwnProperty('state')) {
 			changeset.state = changeset.state === undefined ? '' : `[[flags:state-${changeset.state}]]`;
 		}

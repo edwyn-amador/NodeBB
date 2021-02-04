@@ -21,7 +21,7 @@ popularController.get = async function (req, res, next) {
 		data.breadcrumbs = helpers.buildBreadcrumbs(breadcrumbs);
 	}
 
-	const feedQs = data.rssFeedUrl.split('?')[1];
+	const [, feedQs] = data.rssFeedUrl.split('?');
 	data.rssFeedUrl = `${nconf.get('relative_path')}/popular/${validator.escape(String(req.query.term || 'alltime'))}.rss`;
 	if (req.loggedIn) {
 		data.rssFeedUrl += `?${feedQs}`;

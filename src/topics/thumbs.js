@@ -76,7 +76,7 @@ Thumbs.associate = async function ({ id, path: relativePath, url }) {
 	// Associate thumbnails with the main pid (only on local upload)
 	if (!isDraft && relativePath) {
 		const topics = require('.');
-		const mainPid = (await topics.getMainPids([id]))[0];
+		const [mainPid] = await topics.getMainPids([id]);
 		posts.uploads.associate(mainPid, relativePath.replace('/files/', ''));
 	}
 };
@@ -110,7 +110,7 @@ Thumbs.delete = async function (id, relativePath) {
 		// Dissociate thumbnails with the main pid
 		if (!isDraft) {
 			const topics = require('.');
-			const mainPid = (await topics.getMainPids([id]))[0];
+			const [mainPid] = await topics.getMainPids([id]);
 			posts.uploads.dissociate(mainPid, relativePath.replace('/files/', ''));
 		}
 	}

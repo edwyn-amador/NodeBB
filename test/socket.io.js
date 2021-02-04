@@ -664,7 +664,7 @@ describe('socket.io', () => {
 
 					// Event validity
 					assert.strictEqual(data.event.length, 1);
-					const event = data.event[0];
+					const [event] = data.event;
 					assert.strictEqual(event.type, 'password-reset');
 					assert.strictEqual(event.text, '[[success:success]]');
 
@@ -686,7 +686,7 @@ describe('socket.io', () => {
 
 					// Event validity
 					assert.strictEqual(data.event.length, 1);
-					const event = data.event[0];
+					const [event] = data.event;
 					assert.strictEqual(event.type, 'password-reset');
 					assert.strictEqual(event.text, '[[error:reset-rate-limited]]');
 

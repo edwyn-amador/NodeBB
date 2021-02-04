@@ -208,7 +208,7 @@ describe('Topic thumbs', () => {
 		});
 
 		it('should no longer be associated with that topic\'s main pid\'s uploads', async () => {
-			const mainPid = (await topics.getMainPids([1]))[0];
+			const [mainPid] = await topics.getMainPids([1]);
 			const uploads = await posts.uploads.list(mainPid);
 			assert(!uploads.includes(path.basename(relativeThumbPaths[0])));
 		});

@@ -104,7 +104,7 @@ async function onMessage(socket, payload) {
 		return winston.warn('[socket.io] Empty payload');
 	}
 
-	const eventName = payload.data[0];
+	const [eventName] = payload.data;
 	const params = typeof payload.data[1] === 'function' ? {} : payload.data[1];
 	const callback = typeof payload.data[payload.data.length - 1] === 'function' ? payload.data[payload.data.length - 1] : function () {};
 
@@ -113,7 +113,7 @@ async function onMessage(socket, payload) {
 	}
 
 	const parts = eventName.toString().split('.');
-	const namespace = parts[0];
+	const [namespace] = parts;
 	const methodToCall = parts.reduce((prev, cur) => {
 		if (prev !== null && prev[cur]) {
 			return prev[cur];
@@ -207,7 +207,7 @@ async function validateSession(socket) {
 const cookieParserAsync = util.promisify((req, callback) => cookieParser(req, {}, err => callback(err)));
 
 async function authorize(socket, callback) {
-	const request = socket.request;
+	const { request } = socket;
 
 	if (!request) {
 		return callback(new Error('[[error:not-authorized]]'));

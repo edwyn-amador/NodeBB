@@ -643,7 +643,7 @@ describe('Flags', () => {
 					content: 'this is my note',
 				};
 
-				const data = notes[1];
+				const [, data] = notes;
 				for (const key in compare) {
 					if (compare.hasOwnProperty(key)) {
 						assert.ok(data[key]);

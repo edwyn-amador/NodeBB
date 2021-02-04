@@ -31,7 +31,7 @@ async function processImports(paths, templatePath, source) {
 		return source;
 	}
 
-	const partial = matches[1];
+	const [, partial] = matches;
 	if (paths[partial] && templatePath !== partial) {
 		const partialSource = await fs.promises.readFile(paths[partial], 'utf8');
 		source = source.replace(regex, partialSource);

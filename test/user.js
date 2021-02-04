@@ -2241,10 +2241,10 @@ describe('User', () => {
 				User.getAllInvites((err, data) => {
 					assert.ifError(err);
 
-					const adminData = data.filter(d => parseInt(d.uid, 10) === adminUid)[0];
+					const adminData = data.find(d => parseInt(d.uid, 10) === adminUid);
 					assert.notEqual(adminData.invitations.indexOf('invite99@test.com'), -1);
 
-					const inviterData = data.filter(d => parseInt(d.uid, 10) === inviterUid)[0];
+					const inviterData = data.find(d => parseInt(d.uid, 10) === inviterUid);
 					Array.from(Array(6)).forEach((_, i) => {
 						assert.notEqual(inviterData.invitations.indexOf(`invite${i + 1}@test.com`), -1);
 					});

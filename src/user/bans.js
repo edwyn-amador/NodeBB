@@ -94,7 +94,7 @@ module.exports = function (User) {
 	User.bans.canLoginIfBanned = async function (uid) {
 		let canLogin = true;
 
-		const banned = (await User.bans.unbanIfExpired([uid]))[0].banned;
+		const [{ banned }] = await User.bans.unbanIfExpired([uid]);
 		// Group privilege overshadows individual one
 		if (banned) {
 			canLogin = await privileges.global.canGroup('local:login', groups.BANNED_USERS);

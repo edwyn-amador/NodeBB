@@ -11,7 +11,7 @@ module.exports = {
 		const batch = require('../../batch');
 		const posts = require('../../posts');
 		const flags = require('../../flags');
-		const progress = this.progress;
+		const { progress } = this;
 
 		batch.processSortedSet('posts:pid', (ids, next) => {
 			posts.getPostsByPids(ids, 1, (err, posts) => {
@@ -39,7 +39,7 @@ module.exports = {
 
 						// Just take the first entry
 						const datetime = data.uids[0].score;
-						const reason = data.reasons[0].split(':')[1];
+						const [, reason] = data.reasons[0].split(':');
 						let flagObj;
 
 						async.waterfall([

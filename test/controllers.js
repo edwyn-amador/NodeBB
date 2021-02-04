@@ -834,7 +834,7 @@ describe('Controllers', () => {
 		it('should revoke user session', (done) => {
 			db.getSortedSetRange(`uid:${uid}:sessions`, 0, -1, (err, sids) => {
 				assert.ifError(err);
-				const sid = sids[0];
+				const [sid] = sids;
 
 				db.sessionStore.get(sid, (err, sessionObj) => {
 					assert.ifError(err);
@@ -1294,7 +1294,7 @@ describe('Controllers', () => {
 				function (res, body, next) {
 					assert.equal(res.statusCode, 200);
 					assert(body);
-					const notif = body.notifications[0];
+					const [notif] = body.notifications;
 					assert.equal(notif.bodyShort, notifData.bodyShort);
 					assert.equal(notif.bodyLong, notifData.bodyLong);
 					assert.equal(notif.pid, notifData.pid);

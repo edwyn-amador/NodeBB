@@ -404,7 +404,7 @@ describe('Messaging Library', () => {
 						User.notifications.get(herpUid, (err, data) => {
 							assert.ifError(err);
 							assert(data.unread[0]);
-							const notification = data.unread[0];
+							const [notification] = data.unread;
 							assert.equal(notification.bodyShort, '[[notifications:new_message_from, foo]]');
 							assert.equal(notification.nid, `chat_${fooUid}_${roomId}`);
 							assert.equal(notification.path, `${nconf.get('relative_path')}/chats/${roomId}`);
