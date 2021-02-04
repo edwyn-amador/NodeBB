@@ -124,7 +124,8 @@ module.exports = function (Categories) {
 	function assignTopicsToCategories(categories, topics) {
 		categories.forEach((category) => {
 			if (category) {
-				category.posts = topics.filter(topic => topic.cid && (topic.cid === category.cid || topic.parentCid === category.cid))
+				category.posts = topics
+					.filter(topic => topic.cid && (topic.cid === category.cid || topic.parentCid === category.cid))
 					.sort((a, b) => b.pid - a.pid)
 					.slice(0, parseInt(category.numRecentReplies, 10));
 			}

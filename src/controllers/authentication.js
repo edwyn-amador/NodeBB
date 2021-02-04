@@ -86,7 +86,11 @@ authenticationController.register = async function (req, res) {
 			throw new Error('[[error:invalid-email]]');
 		}
 
-		if (!userData.username || userData.username.length < meta.config.minimumUsernameLength || slugify(userData.username).length < meta.config.minimumUsernameLength) {
+		if (
+			!userData.username ||
+			userData.username.length < meta.config.minimumUsernameLength ||
+			slugify(userData.username).length < meta.config.minimumUsernameLength
+		) {
 			throw new Error('[[error:username-too-short]]');
 		}
 

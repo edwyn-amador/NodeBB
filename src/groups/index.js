@@ -121,7 +121,17 @@ Groups.get = async function (groupName, options) {
 		stop = (parseInt(options.userListCount, 10) || 4) - 1;
 	}
 
-	const [groupData, members, selectCategories, pending, invited, isMember, isPending, isInvited, isOwner] = await Promise.all([
+	const [
+		groupData,
+		members,
+		selectCategories,
+		pending,
+		invited,
+		isMember,
+		isPending,
+		isInvited,
+		isOwner,
+	] = await Promise.all([
 		Groups.getGroupData(groupName),
 		Groups.getOwnersAndMembers(groupName, options.uid, 0, stop),
 		categories.buildForSelect(groupName, 'topics:read', []),

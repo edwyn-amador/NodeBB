@@ -261,7 +261,13 @@ async function getCategoryData(cids, uid, selectedCid, states, privilege) {
 
 	const visibleCategories = categoryData.filter((c) => {
 		const hasVisibleChildren = checkVisibleChildren(c, cidToAllowed, cidToWatchState, states);
-		const isCategoryVisible = c && cidToAllowed[c.cid] && !c.link && !c.disabled && states.includes(cidToWatchState[c.cid]);
+		const isCategoryVisible = (
+			c &&
+			cidToAllowed[c.cid] &&
+			!c.link &&
+			!c.disabled &&
+			states.includes(cidToWatchState[c.cid])
+		);
 		const shouldBeRemoved = !hasVisibleChildren && !isCategoryVisible;
 		const shouldBeDisaplayedAsDisabled = hasVisibleChildren && !isCategoryVisible;
 
@@ -313,7 +319,8 @@ function checkVisibleChildren(c, cidToAllowed, cidToWatchState, states) {
 		return false;
 	}
 	return c.children.some(c => c && !c.disabled && (
-		(cidToAllowed[c.cid] && states.includes(cidToWatchState[c.cid])) || checkVisibleChildren(c, cidToAllowed, cidToWatchState, states)
+		(cidToAllowed[c.cid] && states.includes(cidToWatchState[c.cid])) ||
+		checkVisibleChildren(c, cidToAllowed, cidToWatchState, states)
 	));
 }
 

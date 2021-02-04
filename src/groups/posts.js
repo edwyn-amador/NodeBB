@@ -16,7 +16,10 @@ module.exports = function (Groups) {
 
 		// Only process those groups that have the cid in its memberPostCids setting (or no setting at all)
 		const groupsCids = await groups.getGroupsFields(groupNames, ['memberPostCids']);
-		groupNames = groupNames.filter((groupName, idx) => !groupsCids[idx].memberPostCids.length || groupsCids[idx].memberPostCids.includes(postData.cid));
+		groupNames = groupNames.filter((groupName, idx) => (
+			!groupsCids[idx].memberPostCids.length ||
+			groupsCids[idx].memberPostCids.includes(postData.cid)
+		));
 
 		const keys = groupNames.map(groupName => `group:${groupName}:member:pids`);
 		await db.sortedSetsAdd(keys, postData.timestamp, postData.pid);
